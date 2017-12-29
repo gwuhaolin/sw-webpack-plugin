@@ -1,0 +1,18 @@
+{
+  "name": "sw-webpack-plugin",
+  "version": "1.0.0",
+  "description": "ServiceWorker webpack plugin",
+  "keywords": [
+    "ServiceWorker",
+    "webpack",
+    "plugin",
+    "sw.js"
+  ],
+  "main": "index.js",
+  "author": "gwuhaolin",
+  "license": "ISC",
+  "dependencies": {
+    "uglify-js": "*",
+    "webpack": "*"
+  }
+}
