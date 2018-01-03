@@ -1,6 +1,6 @@
 {
   "name": "sw-webpack-plugin",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "ServiceWorker webpack plugin",
   "keywords": [
     "ServiceWorker",
@@ -12,7 +12,7 @@
   "author": "gwuhaolin",
   "license": "ISC",
   "dependencies": {
-    "uglify-js": "*",
+    "uglify-js": "^3.0.0",
     "webpack": "*"
   }
 }

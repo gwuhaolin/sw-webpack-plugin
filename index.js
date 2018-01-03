@@ -148,8 +148,12 @@ ${this.getSwContent()}`;
 
       if (isProduction(compilation)) {
         const UglifyJS = require('uglify-js');
-        const uglifyJSRes = UglifyJS.minify(fileContent, {fromString: true});
-        fileContent = uglifyJSRes.code;
+        const uglifyJSRes = UglifyJS.minify(fileContent);
+        if (uglifyJSRes.error) {
+          console.error(uglifyJSRes.error);
+        } else {
+          fileContent = uglifyJSRes.code;
+        }
       }
 
       addFileToWebpackOutput(compilation, 'sw.js', fileContent);
