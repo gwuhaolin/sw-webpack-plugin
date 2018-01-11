@@ -95,14 +95,14 @@ class SwWebpackPlugin {
       exclude = []
     } = this.options;
     for (let i = 0; i < include.length; i++) {
-      const include = include[i];
-      if (!include.test(fileUrl)) {
+      const em = include[i];
+      if (!em.test(fileUrl)) {
         return false;
       }
     }
     for (let i = 0; i < exclude.length; i++) {
-      const exclude = exclude[i];
-      if (exclude.test(fileUrl)) {
+      const em = exclude[i];
+      if (em.test(fileUrl)) {
         return false;
       }
     }

@@ -1,6 +1,6 @@
 {
   "name": "sw-webpack-plugin",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "ServiceWorker webpack plugin",
   "keywords": [
     "ServiceWorker",
