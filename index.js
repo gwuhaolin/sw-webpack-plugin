@@ -71,11 +71,11 @@ class SwWebpackPlugin {
    * options.sw {string}
    *        sw.js template file path
    *
-   * options.includes
-   *        reg array to includes file to be cache
+   * options.include
+   *        reg to include file to be cache
    *
-   * options.excludes
-   *        reg array to excludes file to be cache
+   * options.exclude
+   *        reg to exclude file to be cache
    *
    * options.reduce
    *        function to modify _sw data before inject
@@ -89,18 +89,19 @@ class SwWebpackPlugin {
   // 根据配置的 includes 和 excludes 检查文件是否需要被添加到缓存列表
   shouldCache(fileUrl) {
     const {
-      includes = [
+      include = [
         /\.(js|css|html|png|jpe?g)$/,
-      ], excludes = []
+      ],
+      exclude = []
     } = this.options;
-    for (let i = 0; i < includes.length; i++) {
-      const include = includes[i];
+    for (let i = 0; i < include.length; i++) {
+      const include = include[i];
       if (!include.test(fileUrl)) {
         return false;
       }
     }
-    for (let i = 0; i < excludes.length; i++) {
-      const exclude = excludes[i];
+    for (let i = 0; i < exclude.length; i++) {
+      const exclude = exclude[i];
       if (exclude.test(fileUrl)) {
         return false;
       }
@@ -126,17 +127,17 @@ class SwWebpackPlugin {
     const {reduce} = this.options;
     compiler.plugin('emit', (compilation, callback) => {
       const publicPath = getPublicPath(compilation);
-      const fileUrlList = [];
+      const shouldCacheFileUrlList = [];
 
       Object.keys(compilation.assets).forEach((filename) => {
         const fileUrl = url.resolve(publicPath, filename);
         if (this.shouldCache(fileUrl)) {
-          fileUrlList.push(fileUrl);
+          shouldCacheFileUrlList.push(fileUrl);
         }
       });
 
       let injectData = {
-        assets: fileUrlList,
+        assets: shouldCacheFileUrlList,
         hash: compilation.hash,
       };
       if (typeof reduce === 'function') {
