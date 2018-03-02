@@ -1,9 +1,6 @@
 // 当前缓存版本的唯一标识符
 var cacheKey = _sw.hash;
 
-// 当前缓存白名单，在新脚本的 install 事件里将使用白名单里的 key
-var cacheWhitelist = [_sw.hash];
-
 // 需要被缓存的文件的 URL 列表
 var cacheFileList = _sw.assets;
 
@@ -34,14 +31,14 @@ self.addEventListener('fetch', function (event) {
   );
 });
 
-// 新 Service Workers 线程取得控制权后，将会触发其 activate 事件
+// 当sw.js文件更新时，新 Service Workers 线程会取得控制权，将会触发其 activate 事件
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (cacheNames) {
       return Promise.all(
         cacheNames.map(function (cacheName) {
-          // 不在白名单的缓存全部清理掉
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
+          // 不为cacheKey的缓存全部清理掉
+          if (cacheKey !== cacheName) {
             // 删除缓存
             return caches.delete(cacheName);
           }

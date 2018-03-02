@@ -60,9 +60,6 @@ function getPublicPath(compilation) {
   return compilation.compiler.options.output.publicPath || '';
 }
 
-/**
- * an WebPlugin handle a html page
- */
 class SwWebpackPlugin {
 
   /**
@@ -86,25 +83,17 @@ class SwWebpackPlugin {
     this.options = options || {};
   }
 
-  // 根据配置的 includes 和 excludes 检查文件是否需要被添加到缓存列表
+  // 根据配置的 include 和 exclude 检查文件是否需要被添加到缓存列表
   shouldCache(fileUrl) {
     const {
-      include = [
-        /\.(js|css|html|png|jpe?g)$/,
-      ],
-      exclude = []
+      include = /\.(js|css|html|png|jpe?g)$/,
+      exclude
     } = this.options;
-    for (let i = 0; i < include.length; i++) {
-      const em = include[i];
-      if (!em.test(fileUrl)) {
-        return false;
-      }
+    if (include instanceof RegExp && !include.test(fileUrl)) {
+      return false;
     }
-    for (let i = 0; i < exclude.length; i++) {
-      const em = exclude[i];
-      if (em.test(fileUrl)) {
-        return false;
-      }
+    if (exclude instanceof RegExp && em.test(fileUrl)) {
+      return false;
     }
     return true;
   }
